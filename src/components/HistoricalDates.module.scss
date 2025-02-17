@@ -1,8 +1,8 @@
 .historicalDates {
     display: flex;
+    position: relative;
     color: #42567A;
     font-family: "PT Sans", serif;
-    position: relative;
     flex-direction: column;
     height: 100vh;
     max-width: 80vw;
@@ -22,6 +22,7 @@
     }
 
     &::before {
+    content: '';
     width: 1px;
     height: 100%;
     left: 50%;
@@ -30,7 +31,7 @@
     &::after {
     width: 80vw;
     height: 1px;
-    top: 44%;
+    top: 50%;
     }
 }
 
@@ -45,7 +46,9 @@
 
 .circleContainer {
     position: absolute;
-    top: 24vh;
+    top: calc(50%);
+    left: calc(50%);
+    transform: translate(-50%, -50%);
     width: 400px;
     height: 400px;
 }
@@ -63,9 +66,25 @@
 }
 
 .yearTitle {
+    display: flex;
+    gap: 70px;
+    font-weight: 600;
     position: absolute;
     font-size: 8rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
+
+// .yearPart{
+//     position: absolute;
+// }
+// .yearPart:first-child {
+//     transform: translateX(-50%)
+// }
+// .yearPart:last-child {
+//     transform: translateX(50%)
+// }
 
 .dot {
     display: flex;
@@ -142,6 +161,7 @@
 
 .controls {
     align-self: flex-start;
+    position: relative;
 }
 
 .buttons {
