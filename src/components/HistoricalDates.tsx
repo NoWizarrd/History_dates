@@ -14,7 +14,7 @@ const timePeriods = [
     'Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi',
     '222 Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi'
 ] },
-  { year: [2012, 2017], title: 'title2',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
+  { year: [1999, 1321], title: 'title2',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
   { year: [2013, 2017], title: 'title3',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
   { year: [2015, 2017], title: 'title4',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
   { year: [2015, 2017], title: 'title5',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
@@ -24,9 +24,22 @@ const timePeriods = [
 export default function HistoricalDates() {
   const container = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  
   useGSAP(() => {
+
     const angle = 360 / timePeriods.length;
-    gsap.to(`.${styles.circle}`, { rotation: activeIndex * -angle, duration: 0.5, ease: 'power2.out' });
+    gsap.to(`.${styles.circle}`, { rotation: activeIndex * -angle, duration: 0.5, ease: 'power2.out', });
+
+    gsap.from(`.${styles.yearTitle}`, {
+        textContent: timePeriods[activeIndex].year, //
+        duration: 1,
+        snap: { textContent: 1 }
+      })
+
+    // gsap.to(`.${styles.dot}`, { x: x, y: y, duration: 0.5, ease: 'power2.out', });
+    
+
   }, [activeIndex]);
 
   const handleClick = (index: number) => {
@@ -34,39 +47,40 @@ export default function HistoricalDates() {
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + timePeriods.length) % timePeriods.length);
+    setActiveIndex((prev) => (prev - 1));
   };
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % timePeriods.length);
+    setActiveIndex((prev) => (prev + 1));
   };
 
   return (
     <div className={styles.historicalDates} ref={container}>
       <h2 className={styles.h2}>Исторические даты</h2>
       <div className={styles.circleContainer}>
+        <h1 className={styles.yearTitle}>
+            <span>
+                {`${timePeriods[activeIndex].year[0]} `} 
+            </span>
+            <span>
+                {`${timePeriods[activeIndex].year[1]}`}
+            </span>
+        </h1>
         <div className={styles.circle}>
           {timePeriods.map((period, index) => {
-            const angle = (360 / timePeriods.length) * index;
-            const radius = 200; // Радиус окружности
-            const x = radius * Math.cos((angle * Math.PI) / 180);
-            const y = radius * Math.sin((angle * Math.PI) / 180);
+              const angle = (360 / timePeriods.length) * (index - 1);
+              const radius = 200; // Радиус окружности
+              const x = radius * Math.cos((angle * Math.PI) / 180);
+              const y = radius * Math.sin((angle * Math.PI) / 180);
             return (
                 <>
-                {
-                    index === activeIndex ?
-                    <h1 className={styles.yearTitle}>
-                        {`${period.year[0]} ${period.year[1]}`}
-                    </h1> :
-                    null
-                }
                 <div
                     key={period.title}
-                    className={`${styles.dot} ${index === activeIndex ? styles.active : ''}`}
+                    className={`${styles.dot} ${index === activeIndex ? styles.active : styles.hiddenDot}`}
                     style={{ transform: `translate(${x}px, ${y}px)` }}
                     onClick={() => handleClick(index)}
                 >
-                    {index === activeIndex ? index : ''}
+                    {index === activeIndex ? index + 1 : ''}
                 </div>
 
               </>
@@ -76,17 +90,17 @@ export default function HistoricalDates() {
       </div>
       <div className={styles.controls}>
         <p>{`0${activeIndex+1}/0${timePeriods.length}`}</p>
-        <button onClick={handlePrev}>{'<'}</button>
-        <button onClick={handleNext}>{'>'}</button>
+        <button onClick={handlePrev} disabled={activeIndex === 0}>{'<'}</button>
+        <button onClick={handleNext} disabled={activeIndex === timePeriods.length - 1}>{'>'}</button>
       </div>
-      <Swiper
-      className={styles.eventsSlider}
-      spaceBetween={40}
-      slidesPerView={3}
-      navigation
-      pagination={{ clickable: true }}
-      scrollbar={{ draggable: true }}
-      >
+        <Swiper
+        className={styles.eventsSlider}
+        spaceBetween={40}
+        slidesPerView={3}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        >
         {timePeriods[activeIndex].events.map((event, index) => (
           <SwiperSlide key={index} className={styles.event}>
             {event}
