@@ -1,11 +1,9 @@
-import React from 'react';
+import HistoricalDates from './components/HistoricalDates';
 
-function App() {
-  return (
-    <div className="App">
-
-    </div>
-  );
+export default function App() {
+    return (
+        <>
+            <HistoricalDates/>
+        </>
+    );
 }
-
-export default App;

@@ -1,0 +1,133 @@
+.historicalDates {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 80vw;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    
+    .h2 {
+        font-size: 4rem;
+        position: relative;
+        align-self: flex-start;
+        text-align: start;
+        position: absolute;
+        top: 10vh;
+        margin-left: 5vw;
+        width: 20vw;
+    }
+
+    .circleContainer {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      margin: 0 auto;
+  
+      .circle {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform-origin: center;
+  
+        .yearTitle {
+            flex-wrap: wrap;
+            width: 100vw;
+            font-size: 8rem;
+        }
+
+        .dot {
+          display: flex;
+          position: absolute;
+          text-align: center;
+          justify-content: center;
+          align-items: center;
+          background-color: #42567A;
+          width: 6px;
+          height: 6px;
+          background-color: none;
+          border-radius: 50%;
+          cursor: pointer;
+  
+          &.active {
+            background-color: white;
+            z-index: 22;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #ccc;
+          }
+
+          &:hover {
+            background-color: white;
+            z-index: 22;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #ccc;
+          }
+        }
+
+
+      }
+    }
+  
+    .eventsSlider {
+      height: 100px;
+      width: 90%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px;
+      padding: 10px;
+    }
+    .event{
+        height: 90px;
+        width: 320px;
+      }
+
+
+    .controls {
+      align-self: flex-start;
+      margin: 0 0px 0 5vw;
+      font-size: 1.2rem;
+  
+      button {
+        margin: 0 8px;
+        font-size: 20px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        border: 1px #ccc solid;
+        border-radius: 100%;
+
+      }
+    }
+  
+    // Сетки
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      background-color: #ccc;
+      z-index: -2;
+    }
+  
+    &::before {
+      width: 1px;
+      height: 100%;
+      left: 50%;
+    }
+  
+    &::after {
+      width: 80vw;
+      height: 1px;
+      top: 44%;
+    }
+  }
