@@ -1,11 +1,13 @@
 .historicalDates {
     display: flex;
+    color: #42567A;
+    font-family: "PT Sans", serif;
     position: relative;
     flex-direction: column;
     height: 100vh;
     max-width: 80vw;
     margin: 0 auto;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
     border-right: 1px solid #ccc;
@@ -34,17 +36,16 @@
 
 .h2 {
     font-size: 4rem;
-    position: relative;
     align-self: flex-start;
     text-align: start;
-    position: absolute;
     top: 10vh;
     margin-left: 5vw;
     width: 20vw;
 }
 
 .circleContainer {
-    position: relative;
+    position: absolute;
+    top: 24vh;
     width: 400px;
     height: 400px;
 }
@@ -96,8 +97,28 @@
     }
 }
 
-.hiddenDot{
-    
+.dot:hover .hiddenDot,
+.dot.active .hiddenDot{
+    opacity: 1;
+}
+
+.hiddenDot {
+    display: flex;
+    position: absolute;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    opacity: 0;
+    background-color: white;
+    z-index: 22;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #ccc;
+}
+
+.hiddenDot:hover {
+    opacity: 1;
 }
   
 .eventsSlider {
@@ -110,14 +131,20 @@
     padding: 10px;
 }
 
-.event{
+.event {
+    text-align: left;
     height: 90px;
-    width: 320px;
+    max-width: 300px;
+    &:hover {
+        cursor: grabbing;
     }
-
+}
 
 .controls {
     align-self: flex-start;
+}
+
+.buttons {
     margin: 0 0px 0 5vw;
     font-size: 1.2rem;
 

@@ -12,6 +12,8 @@ const timePeriods = [
     '13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды',
     'Телескоп «Хаббл» обнаружил самую удаленную из всех обнаруженных галактик, получившую обозначение GN-z11',
     'Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi',
+    '222 Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi',
+    '222 Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi',
     '222 Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi'
 ] },
   { year: [1999, 1321], title: 'title2',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
@@ -76,11 +78,14 @@ export default function HistoricalDates() {
                 <>
                 <div
                     key={period.title}
-                    className={`${styles.dot} ${index === activeIndex ? styles.active : styles.hiddenDot}`}
+                    className={`${styles.dot} ${index === activeIndex ? styles.active : ''}`}
                     style={{ transform: `translate(${x}px, ${y}px)` }}
                     onClick={() => handleClick(index)}
                 >
-                    {index === activeIndex ? index + 1 : ''}
+                  <div className={styles.hiddenDot}>
+                    {index + 1}
+                  </div>
+                    
                 </div>
 
               </>
@@ -89,6 +94,7 @@ export default function HistoricalDates() {
         </div>
       </div>
       <div className={styles.controls}>
+      <div className={styles.buttons}>
         <p>{`0${activeIndex+1}/0${timePeriods.length}`}</p>
         <button onClick={handlePrev} disabled={activeIndex === 0}>{'<'}</button>
         <button onClick={handleNext} disabled={activeIndex === timePeriods.length - 1}>{'>'}</button>
@@ -107,6 +113,7 @@ export default function HistoricalDates() {
           </SwiperSlide>
         ))}
       </Swiper>
+      </div>
     </div>
   );
 }
