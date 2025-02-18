@@ -4,7 +4,7 @@
     color: #42567A;
     font-family: "PT Sans", serif;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     max-width: 80vw;
     margin: 0 auto;
     border-right: 1px solid rgba(66, 86, 122, 0.2);
@@ -162,9 +162,8 @@
     font-size: 1.1rem;
     text-align: start;
     padding: 0 5vw; 
-
     button {
-        margin: 0 18px 0 0;
+        margin-right: 18px;
         font-size: 20px;
         width: 40px;
         height: 40px;
@@ -173,5 +172,41 @@
         border: 1px #ccc solid;
         border-radius: 100%;
     }
+}
+
+@media (max-width: 1024px) {
+    .h2 {
+        font-size: 3rem;
+    }
+    .yearTitle {
+        font-weight: 600;
+        font-size: 6rem;
+        left: -6vw;
+        top: 6vh;
+        gap: 60px;
+    }
+}
+
+@media (max-height: 850px) {
+    .controls{
+        min-height: 250px;
+    } 
+
+    .buttons{
+        font-size: 1rem;
+
+        button {
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+    }
+}
+
+@media (max-height: 720px) {
+    .controls{
+        min-height: 120px;
+    } 
 }
 

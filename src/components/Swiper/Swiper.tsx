@@ -6,10 +6,13 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
+import 'swiper/css/pagination';
 
 interface SwiperProps {
     activeIndex: number
 }
+// eslint-disable-next-line no-restricted-globals
+const swiperArray = screen.width > 768 ? [Navigation] : []
 
 export default function SwiperComponent (props: SwiperProps) {
     const {activeIndex} = props
@@ -29,10 +32,14 @@ export default function SwiperComponent (props: SwiperProps) {
   return (
     <Swiper
         className={styles.eventsSlider}
-        spaceBetween={'10%'}
-        slidesPerView={3}
-        navigation={true}
-        modules={[Navigation]}
+        // eslint-disable-next-line no-restricted-globals
+        spaceBetween={screen.width > 1024 ? '10%' : '2%'}
+        // spaceBetween={'10%'}
+        // eslint-disable-next-line no-restricted-globals
+        slidesPerView={screen.width > 550 ? 3 : 2}
+        // eslint-disable-next-line no-restricted-globals
+        navigation={screen.width > 768 ? true : false}
+        modules={swiperArray}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         >

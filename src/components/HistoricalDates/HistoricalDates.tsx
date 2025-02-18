@@ -3,9 +3,9 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import 'swiper/scss';
 import styles from './HistoricalDates.module.scss';
-import { timePeriods } from '../data/timePeriods';
+import { timePeriods } from '../../data/timePeriods';
 import 'swiper/scss/navigation';
-import SwiperComponent from './Swiper/Swiper';
+import SwiperComponent from '../Swiper/Swiper';
 
 gsap.registerPlugin(useGSAP);
 
