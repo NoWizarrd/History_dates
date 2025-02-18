@@ -14,18 +14,23 @@ export default function HistoricalDatesMobile() {
 
   const container = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const firstYearRef = useRef<HTMLParagraphElement>(null);
+  const secondYearRef = useRef<HTMLParagraphElement>(null)
+
   useGSAP(() => {
-    gsap.to('#firstYear', {
-      textContent: timePeriods[activeIndex].year1,
-      duration: 1,
-      snap: { textContent: 1 },
-    });
-    
-    gsap.to('#secondYear', {
-      textContent: timePeriods[activeIndex].year2,
-      duration: 1,
-      snap: { textContent: 1 },
-    });
+    if (firstYearRef.current && secondYearRef.current) {
+        gsap.to(firstYearRef.current, {
+          textContent: timePeriods[activeIndex].year1,
+          duration: 1,
+          snap: { textContent: 1 },
+        });
+  
+        gsap.to(secondYearRef.current, {
+          textContent: timePeriods[activeIndex].year2,
+          duration: 1,
+          snap: { textContent: 1 },
+        });
+      }
 
     gsap.fromTo(`.${styles.Title}`, {
       opacity: 0,
@@ -55,8 +60,8 @@ export default function HistoricalDatesMobile() {
     <div className={styles.historicalDates} ref={container}>
       <h2 className={styles.h2}>Исторические даты</h2>
       <div className={styles.yearTitle}>
-        <p id='firstYear' style={{ color: '#5d5fef' }}></p>
-        <p id='secondYear' style={{ color: '#ef5da8' }}></p>
+        <p ref={firstYearRef} style={{ color: '#5d5fef' }}></p>
+        <p ref={secondYearRef} style={{ color: '#ef5da8' }}></p>
       </div>
       <div className={styles.controls}>
         <div className={styles.Title}>
