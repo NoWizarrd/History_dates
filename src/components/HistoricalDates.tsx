@@ -27,13 +27,12 @@ const timePeriods = [
 export default function HistoricalDates() {
   const container = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
+  
   useGSAP(() => {
 
     const angle = 360 / timePeriods.length;
     gsap.to(`.${styles.circle}`, { rotation: activeIndex * -angle, duration: 0.5, ease: 'power2.out', });
 
-    // Анимация для year1
     gsap.to(`.${styles.yearTitle} p:nth-child(1)`, {
         textContent: timePeriods[activeIndex].year1,
         duration: 0.5,
@@ -44,7 +43,6 @@ export default function HistoricalDates() {
         }
     });
 
-    // Анимация для year2
     gsap.to(`.${styles.yearTitle} p:nth-child(2)`, {
         textContent: timePeriods[activeIndex].year2,
         duration: 0.5,
@@ -56,6 +54,17 @@ export default function HistoricalDates() {
       rotation: activeIndex * angle,
       duration: 0.5,
       ease: 'power2.out',
+    });
+
+
+    gsap.fromTo(`.${styles.dotTitle}`, {
+      opacity: 0,
+      ease: 'power1',
+    },
+    {
+      opacity: 1,
+      delay: 1,
+      ease: 'power1',
     });
 
   }, [activeIndex]);
@@ -76,35 +85,41 @@ export default function HistoricalDates() {
     <div className={styles.historicalDates} ref={container}>
       <h2 className={styles.h2}>Исторические даты</h2>
       <div className={styles.circleContainer}>
-        <div className={styles.yearTitle}>
-        <p style={{color: '#5d5fef'}}>{timePeriods[activeIndex].year1}</p>
-        <p style={{color: '#ef5da8'}}>{timePeriods[activeIndex].year2}</p>
-        </div>
-        <div className={styles.circle}>
-          {timePeriods.map((period, index) => {
-              const angle = (360 / timePeriods.length) * (index - 1);
-              const radius = 200;
-              const x = radius * Math.cos((angle * Math.PI) / 180);
-              const y = radius * Math.sin((angle * Math.PI) / 180);
-            return (
-                <>
-                <div
-                    key={period.title}
-                    className={`${styles.dot} ${index === activeIndex ? styles.active : ''}`}
-                    style={{ transform: `translate(${x}px, ${y}px)` }}
-                    onClick={() => handleClick(index)}
-                >
-                  <div className={styles.hiddenDot} style={{ transform: `rotate(${angle * 360 / timePeriods.length}deg)` }}>
-                    {index + 1}
-                  </div>
-                    
-                </div>
-
-              </>
-            );
-          })}
-        </div>
+      <div className={styles.yearTitle}>
+        <p style={{ color: '#5d5fef' }}>{timePeriods[activeIndex].year1}</p>
+        <p style={{ color: '#ef5da8' }}>{timePeriods[activeIndex].year2}</p>
       </div>
+      <div className={styles.circle}>
+        {timePeriods.map((period, index) => {
+          const angle = (360 / timePeriods.length) * (index - 1);
+          const radius = 200;
+          const x = radius * Math.cos((angle * Math.PI) / 180);
+          const y = radius * Math.sin((angle * Math.PI) / 180);
+
+          return (
+            <div
+              key={period.title}
+              className={`${styles.dot} ${index === activeIndex ? styles.active : ''}`}
+              style={{ transform: `translate(${x}px, ${y}px)` }}
+              onClick={() => handleClick(index)}
+            >
+              <div className={styles.hiddenDot}>{index + 1}</div>
+            </div>
+          );
+        })}
+      </div>
+      <div
+        className={styles.dotTitle}
+        style={{
+          position: 'absolute',
+          left: '30%',
+          top: '5%',
+          transform: `translate(220px, -50%)`,
+        }}
+      >
+        <b>{timePeriods[activeIndex].title}</b>
+      </div>
+    </div>
       <div className={styles.controls}>
         <div className={styles.buttons}>
             <p>{`0${activeIndex+1}/0${timePeriods.length}`}</p>
