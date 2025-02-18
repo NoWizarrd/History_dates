@@ -6,34 +6,60 @@ import styles from './HistoricalDates.module.scss';
 import { timePeriods } from '../../data/timePeriods';
 import 'swiper/scss/navigation';
 import SwiperComponent from '../Swiper/Swiper';
+import React from 'react';
 
 gsap.registerPlugin(useGSAP);
 
 export default function HistoricalDates() {
   const container = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const firstYearRef = useRef<HTMLParagraphElement>(null);
+  const secondYearRef = useRef<HTMLParagraphElement>(null)
+  const circleRef = useRef<HTMLDivElement>(null);
+  const hiddenDotRefs = useRef<(HTMLDivElement | null)[]>([]); 
+  const dotTitleRef = useRef<HTMLDivElement>(null);
+  hiddenDotRefs.current = Array.from({ length: timePeriods.length }, () => null);
+
   useGSAP(() => {
 
     const angle = 360 / timePeriods.length;
-    gsap.to(`.${styles.circle}`, { rotation: activeIndex * -angle, duration: 0.5, ease: 'power2.out', });
+    if (circleRef.current) {
+      gsap.to(circleRef.current, {
+        rotation: activeIndex * -angle,
+        duration: 0.5,
+        ease: 'power2.out',
+      });
+    }
 
-    gsap.to('#firstYear', {
-      textContent: timePeriods[activeIndex].year1,
-      duration: 1,
-      snap: { textContent: 1 },
-    });
-    
-    gsap.to('#secondYear', {
-      textContent: timePeriods[activeIndex].year2,
-      duration: 1,
-      snap: { textContent: 1 },
+    hiddenDotRefs.current.forEach((dot, index) => {
+        gsap.to(dot, {
+          rotation: activeIndex * angle,
+          duration: 0.5,
+          ease: 'power2.out',
+        });
     });
 
-    gsap.to(`.${styles.hiddenDot}`, {
-      rotation: activeIndex * angle,
-      duration: 0.5,
-      ease: 'power2.out',
-    });
+    // gsap.to(`.${styles.circle}`, { rotation: activeIndex * -angle, duration: 0.5, ease: 'power2.out', });
+
+    if (firstYearRef.current && secondYearRef.current) {
+      gsap.to(firstYearRef.current, {
+        textContent: timePeriods[activeIndex].year1,
+        duration: 1,
+        snap: { textContent: 1 },
+      });
+
+      gsap.to(secondYearRef.current, {
+        textContent: timePeriods[activeIndex].year2,
+        duration: 1,
+        snap: { textContent: 1 },
+      });
+    }
+
+    // gsap.to(`.${styles.hiddenDot}`, {
+    //   rotation: activeIndex * angle,
+    //   duration: 0.5,
+    //   ease: 'power2.out',
+    // });
 
     // gsap.to(`.${styles.dotTitle}`, {
     //   rotation: activeIndex * angle,
@@ -41,7 +67,7 @@ export default function HistoricalDates() {
     //   ease: 'power2.out',
     // });
     
-    gsap.fromTo(`.${styles.dotTitle}`, {
+    gsap.fromTo(dotTitleRef.current, {
       opacity: 0,
       ease: 'power1',
     },
@@ -50,6 +76,8 @@ export default function HistoricalDates() {
       delay: 1,
       ease: 'power1',
     });
+
+    
   }, [activeIndex]);
 
   const handleClick = (index: number) => {
@@ -70,10 +98,10 @@ export default function HistoricalDates() {
       <h2 className={styles.h2}>Исторические даты</h2>
       <div className={styles.circleContainer}>
       <div className={styles.yearTitle}>
-        <p id='firstYear' style={{ color: '#5d5fef' }}></p>
-        <p id='secondYear' style={{ color: '#ef5da8' }}></p>
+        <p ref={firstYearRef} style={{ color: '#5d5fef' }}></p>
+        <p ref={secondYearRef} style={{ color: '#ef5da8' }}></p>
       </div>
-      <div className={styles.circle}>
+      <div ref={circleRef} className={styles.circle}>
         {timePeriods.map((period, index) => {
           const angle = (360 / timePeriods.length) * (index - 1);
           const radius = 200;
@@ -83,12 +111,19 @@ export default function HistoricalDates() {
           return (       
             // <div key={period.title} className={styles.dotWrapper}>
               <div
-                key={period.title}
-                className={`${styles.dot} ${index === activeIndex ? styles.active : ''}`}
-                style={{ transform: `translate(${x}px, ${y}px)` }}
-                onClick={() => handleClick(index)}
+              key={period.title}
+              ref={(el) => {
+                hiddenDotRefs.current[index] = el;
+              }}
+              className={`${styles.dot} ${index === activeIndex ? styles.active : ''}`}
+              style={{ transform: `translate(${x}px, ${y}px)` }}
+              onClick={() => handleClick(index)}
               >
-                <div className={styles.hiddenDot}>{index + 1}</div>
+                <div
+                  className={styles.hiddenDot}
+                >
+                  {index + 1}
+                </div>
                 {/* <div className={styles.dotTitle} style={{ display: activeIndex === index ? "block" : "none"}} >
                   <b>{timePeriods[activeIndex].title}</b>
                 </div> */}
@@ -104,6 +139,7 @@ export default function HistoricalDates() {
         })}
       </div>
       <div
+        ref={dotTitleRef}
         className={styles.dotTitle}
       >
         <b>{timePeriods[activeIndex].title}</b>
