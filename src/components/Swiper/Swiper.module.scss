@@ -1,0 +1,21 @@
+.eventsSlider {
+    width: 100%;
+    overflow: hidden; 
+    --swiper-navigation-size: 22px;
+    --swiper-navigation-top-offset: 50%;
+    --swiper-navigation-sides-offset: 2vw;
+    padding: 0 5vw; 
+    box-sizing: border-box;
+
+}
+
+.event {
+    font-size: 1.2rem;
+    text-align: left;
+    &:hover {
+        cursor: grabbing;
+    }
+    h3 {
+        color: #3877EE;
+    }
+}

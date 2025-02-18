@@ -1,34 +1,17 @@
 import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+import 'swiper/scss';
 import styles from './HistoricalDates.module.scss';
+import { timePeriods } from '../data/timePeriods';
+import 'swiper/scss/navigation';
+import SwiperComponent from './Swiper/Swiper';
 
 gsap.registerPlugin(useGSAP);
-
-
-const timePeriods = [
-  { year1: 2015, year2:2017, title: 'title1',  events: [
-    '13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды',
-    'Телескоп «Хаббл» обнаружил самую удаленную из всех обнаруженных галактик, получившую обозначение GN-z11',
-    'Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi',
-    '222 Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi',
-    '222 Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi',
-    '222 Компания Tesla официально представила первый в мире электрический грузовик Tesla Semi'
-] },
-  { year1: 1999, year2:2189, title: 'title2',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
-  { year1: 2000, year2:2017, title: 'title3',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
-  { year1: 3000, year2:2017, title: 'title4',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
-  { year1: 1231, year2:2017, title: 'title5',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
-  { year1: 5212, year2:2017, title: 'title6',  events: ['Событие 1', 'Событие 2', 'Событие 3', 'Событие 4'] },
-
-];
 
 export default function HistoricalDates() {
   const container = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  
   useGSAP(() => {
 
     const angle = 360 / timePeriods.length;
@@ -52,7 +35,12 @@ export default function HistoricalDates() {
       ease: 'power2.out',
     });
 
-
+    // gsap.to(`.${styles.dotTitle}`, {
+    //   rotation: activeIndex * angle,
+    //   duration: 0.5,
+    //   ease: 'power2.out',
+    // });
+    
     gsap.fromTo(`.${styles.dotTitle}`, {
       opacity: 0,
       ease: 'power1',
@@ -62,7 +50,6 @@ export default function HistoricalDates() {
       delay: 1,
       ease: 'power1',
     });
-
   }, [activeIndex]);
 
   const handleClick = (index: number) => {
@@ -76,6 +63,7 @@ export default function HistoricalDates() {
   const handleNext = () => {
     setActiveIndex((prev) => prev + 1);
   };
+
 
   return (
     <div className={styles.historicalDates} ref={container}>
@@ -92,26 +80,31 @@ export default function HistoricalDates() {
           const x = radius * Math.cos((angle * Math.PI) / 180);
           const y = radius * Math.sin((angle * Math.PI) / 180);
 
-          return (
-            <div
-              key={period.title}
-              className={`${styles.dot} ${index === activeIndex ? styles.active : ''}`}
-              style={{ transform: `translate(${x}px, ${y}px)` }}
-              onClick={() => handleClick(index)}
-            >
-              <div className={styles.hiddenDot}>{index + 1}</div>
-            </div>
+          return (       
+            // <div key={period.title} className={styles.dotWrapper}>
+              <div
+                key={period.title}
+                className={`${styles.dot} ${index === activeIndex ? styles.active : ''}`}
+                style={{ transform: `translate(${x}px, ${y}px)` }}
+                onClick={() => handleClick(index)}
+              >
+                <div className={styles.hiddenDot}>{index + 1}</div>
+                {/* <div className={styles.dotTitle} style={{ display: activeIndex === index ? "block" : "none"}} >
+                  <b>{timePeriods[activeIndex].title}</b>
+                </div> */}
+              </div>
+            //    <div
+            //    className={styles.dotTitle}
+            //    style={{ display: index === activeIndex ? "block" : "none", top: y, left: x + 72 }}
+            //  >
+            //    <b>{period.title}</b>
+            //  </div>
+            // </div>     
           );
         })}
       </div>
       <div
         className={styles.dotTitle}
-        style={{
-          position: 'absolute',
-          left: '30%',
-          top: '5%',
-          transform: `translate(220px, -50%)`,
-        }}
       >
         <b>{timePeriods[activeIndex].title}</b>
       </div>
@@ -122,20 +115,7 @@ export default function HistoricalDates() {
             <button onClick={handlePrev} disabled={activeIndex === 0}>{'<'}</button>
             <button onClick={handleNext} disabled={activeIndex === timePeriods.length - 1}>{'>'}</button>
         </div>
-         <Swiper
-            className={styles.eventsSlider}
-            spaceBetween={40}
-            slidesPerView={3}
-            navigation
-            pagination={{ clickable: true }}
-            scrollbar={{ draggable: true }}
-            >
-            {timePeriods[activeIndex].events.map((event, index) => (
-            <SwiperSlide key={index} className={styles.event}>
-                {event}
-            </SwiperSlide>
-            ))}
-        </Swiper>
+        <SwiperComponent activeIndex={activeIndex}/>
       </div>
     </div>
   );

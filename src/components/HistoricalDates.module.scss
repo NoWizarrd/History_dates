@@ -7,16 +7,17 @@
     height: 100vh;
     max-width: 80vw;
     margin: 0 auto;
-    border-right: 1px solid #ccc;
-    border-left: 1px solid #ccc;
+    border-right: 1px solid rgba(66, 86, 122, 0.2);
+    border-left: 1px solid rgba(66, 86, 122, 0.2);
     justify-content: space-between;
     align-items: center;
     text-align: center;
+    overflow-x: hidden;
   
     &::before, &::after {
       content: '';
       position: absolute;
-      background-color: #ccc;
+      background-color: rgba(66, 86, 122, 0.2);
       z-index: -2;
     }
   
@@ -37,9 +38,10 @@
     font-size: 4rem;
     align-self: flex-start;
     text-align: start;
-    top: 10vh;
-    margin-left: 5vw;
+    padding-left: 5vw;
     width: 20vw;
+    border-image: linear-gradient(180deg, #3877EE -5%, #EF5DA8 85%) 1;
+    border-left: 4px solid;
   }
   
   .circleContainer {
@@ -49,13 +51,14 @@
     transform: translate(-50%, -50%);
     width: 400px;
     height: 400px;
+    z-index: 20;
   }
   
   .circle {
     position: relative;
     width: 100%;
     height: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(66, 86, 122, 0.2);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -70,11 +73,11 @@
     font-weight: 600;
     position: absolute;
     font-size: 8rem;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    max-height: 25vh;
+    left: -40%;
+    top:-1vh;
   }
-  
+
   .dot {
     display: flex;
     position: absolute;
@@ -101,18 +104,30 @@
       height: 36px;
       border: 1px solid #ccc;
     }
-  
-    .dotTitle {
-      position: absolute;
-      left: 50px;
-      top: 50%;
-      white-space: nowrap;
-      font-size: 1rem;
-      color: #42567A;
-
-    }
   }
-  
+
+  .dotWrapper{
+    position: absolute;
+  }
+
+  .dotTitle {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 1rem;
+    color: #42567A;
+    left: 85%;
+    top: 3%;
+    // left: 72px;
+    // opacity: 0;
+  }
+
+  // .visibleDotTitle{
+  //   opacity: 1;
+  // }
+  // .hiddenDotTitle{
+  //   opacity: 0;
+  // }
+
   .hiddenDot {
     display: flex;
     position: absolute;
@@ -135,44 +150,28 @@
       opacity: 1;
     }
   }
-  
-.eventsSlider {
-    height: 100px;
-    width: 90%;
+
+  .controls {
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-    padding: 10px;
-}
-
-.event {
-    text-align: left;
-    height: 90px;
-    max-width: 300px;
-    &:hover {
-        cursor: grabbing;
-    }
-}
-
-.controls {
-    align-self: flex-start;
-    position: relative;
+    flex-direction: column;
+    min-height: 350px;
 }
 
 .buttons {
-    margin: 0 0px 0 5vw;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    text-align: start;
+    padding: 0 5vw; 
 
     button {
-    margin: 0 8px;
-    font-size: 20px;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    border: 1px #ccc solid;
-    border-radius: 100%;
+        margin: 0 18px 0 0;
+        font-size: 20px;
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        cursor: pointer;
+        border: 1px #ccc solid;
+        border-radius: 100%;
     }
 }
-  
 
