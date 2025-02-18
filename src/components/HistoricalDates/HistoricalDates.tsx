@@ -6,7 +6,6 @@ import styles from './HistoricalDates.module.scss';
 import { timePeriods } from '../../data/timePeriods';
 import 'swiper/scss/navigation';
 import SwiperComponent from '../Swiper/Swiper';
-import React from 'react';
 
 gsap.registerPlugin(useGSAP);
 
@@ -19,6 +18,7 @@ export default function HistoricalDates() {
   const hiddenDotRefs = useRef<(HTMLDivElement | null)[]>([]); 
   const dotTitleRef = useRef<HTMLDivElement>(null);
   hiddenDotRefs.current = Array.from({ length: timePeriods.length }, () => null);
+  const radius = 200;
 
   useGSAP(() => {
 
@@ -76,8 +76,30 @@ export default function HistoricalDates() {
       delay: 1,
       ease: 'power1',
     });
+    // if (dotTitleRef.current) {
+    //   const activeAngle = (angle * activeIndex - angle) % 360; 
+    //   const x = radius * Math.cos((activeAngle * Math.PI) / 180);
+    //   const y = radius * Math.sin((activeAngle * Math.PI) / 180);
+  
+    //   gsap.to(dotTitleRef.current, {
+    //     x: x + 360 / timePeriods.length, 
+    //     y: y ,
+    //     duration: 0.5,
+    //     ease: 'power2.out',
+    //   });
+    // }
 
-    
+  if (activeIndex === 0 && dotTitleRef.current) {
+    const firstAngle = (angle * (0 - 1)) % 360;
+    const x = radius * Math.cos((firstAngle * Math.PI) / 180);
+    const y = radius * Math.sin((firstAngle * Math.PI) / 180); 
+
+    gsap.set(dotTitleRef.current, {
+      x: x + 360 / timePeriods.length + 180, 
+      y: y - 220, 
+    });
+  }
+
   }, [activeIndex]);
 
   const handleClick = (index: number) => {
@@ -104,7 +126,6 @@ export default function HistoricalDates() {
       <div ref={circleRef} className={styles.circle}>
         {timePeriods.map((period, index) => {
           const angle = (360 / timePeriods.length) * (index - 1);
-          const radius = 200;
           const x = radius * Math.cos((angle * Math.PI) / 180);
           const y = radius * Math.sin((angle * Math.PI) / 180);
 
@@ -138,12 +159,12 @@ export default function HistoricalDates() {
           );
         })}
       </div>
-      <div
-        ref={dotTitleRef}
-        className={styles.dotTitle}
-      >
-        <b>{timePeriods[activeIndex].title}</b>
-      </div>
+        <div
+          ref={dotTitleRef}
+          className={styles.dotTitle}
+        >
+          <b>{timePeriods[activeIndex].title}</b>
+        </div>
     </div>
       <div className={styles.controls}>
         <div className={styles.buttons}>

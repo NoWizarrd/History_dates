@@ -2,7 +2,7 @@
     display: flex;
     position: relative;
     color: #42567A;
-    font-family: "PT Sans", serif;
+    font-family: "Roboto", serif;
     flex-direction: column;
     min-height: 100vh;
     max-width: 80vw;
@@ -107,7 +107,7 @@
   }
 
   .dotWrapper{
-    position: absolute;
+    position: relative;
   }
 
   .dotTitle {
@@ -115,10 +115,8 @@
     white-space: nowrap;
     font-size: 1rem;
     color: #42567A;
-    left: 85%;
-    top: 3%;
-    // left: 72px;
-    // opacity: 0;
+    pointer-events: none;
+    transform: none;
   }
 
   // .visibleDotTitle{
