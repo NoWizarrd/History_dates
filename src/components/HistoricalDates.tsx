@@ -7,6 +7,7 @@ import styles from './HistoricalDates.module.scss';
 
 gsap.registerPlugin(useGSAP);
 
+
 const timePeriods = [
   { year1: 2015, year2:2017, title: 'title1',  events: [
     '13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды',
@@ -33,21 +34,16 @@ export default function HistoricalDates() {
     const angle = 360 / timePeriods.length;
     gsap.to(`.${styles.circle}`, { rotation: activeIndex * -angle, duration: 0.5, ease: 'power2.out', });
 
-    gsap.to(`.${styles.yearTitle} p:nth-child(1)`, {
-        textContent: timePeriods[activeIndex].year1,
-        duration: 0.5,
-        snap: { textContent: 1 },
-        ease: 'power2.out',
-        onStart: () => {
-            
-        }
+    gsap.to('#firstYear', {
+      textContent: timePeriods[activeIndex].year1,
+      duration: 1,
+      snap: { textContent: 1 },
     });
-
-    gsap.to(`.${styles.yearTitle} p:nth-child(2)`, {
-        textContent: timePeriods[activeIndex].year2,
-        duration: 0.5,
-        snap: { textContent: 1 }, 
-        ease: 'power2.out',
+    
+    gsap.to('#secondYear', {
+      textContent: timePeriods[activeIndex].year2,
+      duration: 1,
+      snap: { textContent: 1 },
     });
 
     gsap.to(`.${styles.hiddenDot}`, {
@@ -86,8 +82,8 @@ export default function HistoricalDates() {
       <h2 className={styles.h2}>Исторические даты</h2>
       <div className={styles.circleContainer}>
       <div className={styles.yearTitle}>
-        <p style={{ color: '#5d5fef' }}>{timePeriods[activeIndex].year1}</p>
-        <p style={{ color: '#ef5da8' }}>{timePeriods[activeIndex].year2}</p>
+        <p id='firstYear' style={{ color: '#5d5fef' }}></p>
+        <p id='secondYear' style={{ color: '#ef5da8' }}></p>
       </div>
       <div className={styles.circle}>
         {timePeriods.map((period, index) => {
