@@ -1,0 +1,23 @@
+.paginationSwiper {
+    width: 100%;
+    height: 50px;
+  }
+  
+  .paginationSlide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .paginationBullet {
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &.active {
+        --swiper-pagination-color: rgba(66, 86, 122);
+    }
+  }

@@ -47,8 +47,9 @@ export default function SwiperComponent (props: SwiperProps) {
           <SwiperSlide key={index} className={styles.event}>
             <h3>{event.year}</h3>
             <p>{event.event}</p>
-        </SwiperSlide>
+          </SwiperSlide>
         ))}
+
     </Swiper>
   )
 }

@@ -74,6 +74,13 @@
     }
 }
 
+.pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
 @media (max-width: 530px) {
     .yearTitle {
         font-size: 5rem;
