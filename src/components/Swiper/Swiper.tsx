@@ -4,9 +4,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import {Swiper as SwiperType } from 'swiper';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 import 'swiper/css/pagination';
+import { useRef } from 'react';
 
 interface SwiperProps {
     activeIndex: number
@@ -15,9 +17,11 @@ interface SwiperProps {
 const swiperArray = screen.width > 768 ? [Navigation] : []
 
 export default function SwiperComponent (props: SwiperProps) {
+
+  const eventsSliderRef = useRef<SwiperType>(null);
     const {activeIndex} = props
     useGSAP(() => {
-        gsap.fromTo(`.${styles.eventsSlider}`, {
+        gsap.fromTo(eventsSliderRef.current, {
           opacity: 0,
           delay: 0.5,
           ease: 'power1',
@@ -32,6 +36,9 @@ export default function SwiperComponent (props: SwiperProps) {
   return (
     <Swiper
         className={styles.eventsSlider}
+        onSwiper={(swiper: SwiperType) => {
+          eventsSliderRef.current = swiper; 
+        }}
         // eslint-disable-next-line no-restricted-globals
         spaceBetween={screen.width > 1024 ? '10%' : '2%'}
         // spaceBetween={'10%'}
