@@ -27,3 +27,7 @@
    npm run start
    ```
 4. Откройте приложение по адресу [http://localhost:3000](http://localhost:3000)
+
+## Деплой
+
+Приложение развернуто на [Netlify](https://history-dates.netlify.app/).
